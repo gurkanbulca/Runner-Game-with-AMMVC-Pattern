@@ -82,7 +82,7 @@ public class ScoreController : ElementOf<Application>
     /// <summary>
     /// decrease loose stackable amount from stack.
     /// </summary>
-    public void TryLoseStack()
+    private void TryLoseStack()
     {
         var amount = GetLooseStackAmount();
         if (amount > 0)
