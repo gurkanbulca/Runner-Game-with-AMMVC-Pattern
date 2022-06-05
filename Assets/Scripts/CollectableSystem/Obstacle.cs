@@ -45,6 +45,7 @@ public class Obstacle : Collectable
             case ObstacleMotion.Circular:
             {
                 _parent = new GameObject("ObstacleParent").transform;
+                _parent.SetParent(transform.parent);
                 _parent.position = transform.position;
                 transform.SetParent(_parent);
                 transform.position = new Vector3(-radius, transform.position.y, transform.position.z);
