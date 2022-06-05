@@ -23,7 +23,7 @@ public class OrbitController : ElementOf<Application>
         Master.OnScoreNotificationSent += HandleScoreNotification;
         Master.OnGameStateNotificationSent += HandleGameStateNotification;
     }
-    
+
     private void OnDestroy()
     {
         Master.OnCollectorNotificationSent -= HandleCollectorNotification;
@@ -43,12 +43,12 @@ public class OrbitController : ElementOf<Application>
             CreateOrbiter(playerData.startingStackAmount);
         }
     }
+
     /// <summary>
     /// Listens for obstacle hit and prize claim notifications.
     /// </summary>
     /// <param name="notificationString"></param>
     /// <param name="payload"></param>
-
     private void HandleScoreNotification(string notificationString, Object[] payload)
     {
         if (notificationString == ScoreNotification._StackDamaged)
@@ -72,7 +72,7 @@ public class OrbitController : ElementOf<Application>
     /// <returns></returns>
     private IEnumerator HandleOrbitAttack(OrbitAttack orbitAttack)
     {
-        for (int i = 0; i < orbitAttack.targets.Count; i++)
+        while (orbitAttack.targets.Count > 0)
         {
             var target = orbitAttack.targets[0];
             if (_orbiterCount < orbitAttack.targetHealth)
