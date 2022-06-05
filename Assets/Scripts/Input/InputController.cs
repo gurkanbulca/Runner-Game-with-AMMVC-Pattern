@@ -17,8 +17,6 @@ public class InputController : ElementOf<Application>
         {
             var currentMouseHorizontalPosition = Input.mousePosition.x;
             var difference = currentMouseHorizontalPosition - _lastMouseHorizontalPosition;
-            if (difference == 0) return;
-
             HandleMouseMovement(difference);
             _lastMouseHorizontalPosition = currentMouseHorizontalPosition;
         }

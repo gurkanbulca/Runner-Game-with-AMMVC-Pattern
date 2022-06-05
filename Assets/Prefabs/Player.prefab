@@ -222,18 +222,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7912da6592b2434478514aa876d64175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.25
-  damping: 10
+  speed: 9
+  damping: 9
   accelerationMultiplier: 5
   horizontalClampValues:
     minValue: -2
     maxValue: 2
-  translateClampValues:
-    minValue: -1
-    maxValue: 1
-  rotationAngles:
-    minValue: -150
-    maxValue: 150
 --- !u!114 &8817778472111018148
 MonoBehaviour:
   m_ObjectHideFlags: 0

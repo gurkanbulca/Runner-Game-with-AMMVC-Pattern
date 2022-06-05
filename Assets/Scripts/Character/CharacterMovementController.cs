@@ -5,23 +5,21 @@ using Object = UnityEngine.Object;
 public class CharacterMovementController : ElementOf<Application>
 {
     [SerializeField] private float speed;
-    [SerializeField] private float damping = 1;
+    [SerializeField] private float damping;
     [SerializeField] private float accelerationMultiplier;
 
     [SerializeField] private MinMaxValues horizontalClampValues;
-    [SerializeField] private MinMaxValues translateClampValues;
-    [SerializeField] private MinMaxValues rotationAngles;
 
 
     private float _translateValue;
     private float _acceleration;
 
     private bool _canMovable;
+    private float _horizontal;
 
     private void OnValidate()
     {
         horizontalClampValues.ClampValues();
-        translateClampValues.ClampValues();
     }
 
     private void OnEnable()
@@ -46,55 +44,37 @@ public class CharacterMovementController : ElementOf<Application>
     {
         if (notificationString != InputNotification._MouseMove) return;
 
-        var movement = ((InputModel) payload[0]).Movement;
-        var position = transform.position;
-        var horizontal = position.x + movement;
-        horizontal = Mathf.Clamp(horizontal, horizontalClampValues.minValue, horizontalClampValues.maxValue);
-        _translateValue += horizontal - position.x;
+        _horizontal = ((InputModel) payload[0]).Movement;
     }
 
     private void FixedUpdate()
     {
-        HandleHorizontalMovement();
-        HandleVerticalMovement();
+        HandleMovement();
     }
 
-    private void HandleVerticalMovement()
+    private void HandleMovement()
     {
         var canMovable = _canMovable & Input.GetKey(KeyCode.Mouse0);
         var targetAcceleration = canMovable ? 1f : 0f;
+        _horizontal = canMovable ? _horizontal : 0;
+        if (_horizontal > 0 && transform.position.x >= horizontalClampValues.maxValue
+            || _horizontal < 0 && transform.position.x <= horizontalClampValues.minValue)
+            _horizontal = 0;
+
         _acceleration = Mathf.Lerp(_acceleration, targetAcceleration, Time.fixedDeltaTime * accelerationMultiplier);
-        transform.Translate(0, 0, _acceleration * speed);
+        var direction = new Vector3(_horizontal, 0, _acceleration);
         Master.Notify(CharacterNotification._VerticalMovement, new CharacterMovementModel(_acceleration));
+        if (direction == Vector3.zero) return;
+
+        var rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.fixedDeltaTime * damping);
+        transform.position += transform.forward * _acceleration * Time.fixedDeltaTime * speed;
+        transform.position =
+            new Vector3(
+                Mathf.Clamp(transform.position.x, horizontalClampValues.minValue, horizontalClampValues.maxValue),
+                transform.position.y, transform.position.z);
     }
 
-    private void HandleHorizontalMovement()
-    {
-        if (!_canMovable) return;
-        _translateValue = Mathf.Clamp(_translateValue, translateClampValues.minValue, translateClampValues.maxValue);
-        RotateCharacterTowardDirection();
-        if (_translateValue == 0) return;
-        transform.Translate(_translateValue, 0, 0);
-        _translateValue = 0;
-    }
-
-    private void RotateCharacterTowardDirection()
-    {
-        float angle;
-        if (_translateValue < 0)
-        {
-            var normalizedTranslate = _translateValue / translateClampValues.minValue;
-            angle = Mathf.Lerp(0, rotationAngles.minValue, normalizedTranslate);
-        }
-        else
-        {
-            var normalizedTranslate = _translateValue / translateClampValues.maxValue;
-            angle = Mathf.Lerp(0, rotationAngles.maxValue, normalizedTranslate);
-        }
-
-        var desiredAngle = Quaternion.Euler(0, angle, 0);
-        transform.rotation = Quaternion.Lerp(transform.rotation, desiredAngle, Time.fixedDeltaTime * damping);
-    }
 
     [Serializable]
     private class MinMaxValues
