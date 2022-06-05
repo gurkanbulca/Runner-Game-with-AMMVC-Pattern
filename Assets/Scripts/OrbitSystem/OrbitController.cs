@@ -138,7 +138,8 @@ public class OrbitController : ElementOf<Application>
             obstacle.transform.DOLocalPath(path, .3f, PathType.CatmullRom, gizmoColor: Color.green).SetEase(Ease.InSine)
                 .OnComplete(() =>
                 {
-                    Instantiate(obstacleParticle, transform);
+                    if (_orbiterCount > 0)
+                        Instantiate(obstacleParticle, transform);
                     path = new[]
                     {
                         new Vector3(5 * horizontalMultiplier, 0, -5),
@@ -202,7 +203,7 @@ public class OrbitController : ElementOf<Application>
     /// Remove orbiter from the orbiters by iteration (opposite order to adding process) and also count (input).
     /// </summary>
     /// <param name="count"></param>
-    public void RemoveFromOrbit(int count)
+    private void RemoveFromOrbit(int count)
     {
         for (int i = 0; i < count; i++)
         {
@@ -212,6 +213,6 @@ public class OrbitController : ElementOf<Application>
             orbits[_targetOrbitIndex].RemoveFromOrbit(1);
         }
 
-        _orbiterCount--;
+        _orbiterCount -= count;
     }
 }
