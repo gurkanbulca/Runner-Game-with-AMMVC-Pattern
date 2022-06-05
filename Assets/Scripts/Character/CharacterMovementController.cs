@@ -46,7 +46,7 @@ public class CharacterMovementController : ElementOf<Application>
     {
         if (notificationString != InputNotification._MouseMove) return;
 
-        var movement = ((InputModel) payload[0]).movement;
+        var movement = ((InputModel) payload[0]).Movement;
         var position = transform.position;
         var horizontal = position.x + movement;
         horizontal = Mathf.Clamp(horizontal, horizontalClampValues.minValue, horizontalClampValues.maxValue);

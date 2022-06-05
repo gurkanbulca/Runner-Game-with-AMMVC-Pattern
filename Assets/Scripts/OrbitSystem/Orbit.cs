@@ -1,11 +1,12 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// orbit of orbit system.
+/// </summary>
 public class Orbit : MonoBehaviour
 {
     [SerializeField] private float rotatePeriod;
@@ -21,6 +22,10 @@ public class Orbit : MonoBehaviour
             .SetEase(Ease.Linear);
     }
 
+    /// <summary>
+    /// adds orbiter to orbit.
+    /// </summary>
+    /// <param name="orbiter"></param>
     public void AddToOrbit(Transform orbiter)
     {
         orbiters.Add(orbiter);
@@ -28,6 +33,10 @@ public class Orbit : MonoBehaviour
         RePositionOrbiters();
     }
 
+    /// <summary>
+    /// remove orbiters with amount of input. Anime orbiter with drop.
+    /// </summary>
+    /// <param name="count"></param>
     public void RemoveFromOrbit(int count)
     {
         for (int i = 0; i < count; i++)
@@ -46,6 +55,12 @@ public class Orbit : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// throws orbiter to the target by count.
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
     public IEnumerator AttackToTarget(Transform target, int count)
     {
         for (int i = 0; i < count; i++)
@@ -75,6 +90,10 @@ public class Orbit : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// re-arrange orbiter positions.
+    /// orbiter distance will be equal to neighbor orbiter for every orbiter.
+    /// </summary>
     private void RePositionOrbiters()
     {
         if (orbiters.Count == 0) return;

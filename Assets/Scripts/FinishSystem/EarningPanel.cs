@@ -1,9 +1,10 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Earning UI on the game win screen.
+/// </summary>
 public class EarningPanel : ElementOf<FinishController>
 {
     [SerializeField] private TMP_Text normalPrizeText, bigPrizeText, totalPrizeText;
@@ -26,7 +27,13 @@ public class EarningPanel : ElementOf<FinishController>
         yield return AnimateText(bigPrizeText, _earnedPrize.BigPrize);
         yield return AnimateText(totalPrizeText, _earnedPrize.NormalPrize + _earnedPrize.BigPrize);
     }
-
+    
+    /// <summary>
+    /// transition animation for prize texts.
+    /// </summary>
+    /// <param name="prizeText"></param>
+    /// <param name="prizeAmount"></param>
+    /// <returns></returns>
     private IEnumerator AnimateText(TMP_Text prizeText, int prizeAmount)
     {
         if (prizeAmount == 0)

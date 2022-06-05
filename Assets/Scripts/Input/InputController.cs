@@ -24,6 +24,10 @@ public class InputController : ElementOf<Application>
         }
     }
 
+    /// <summary>
+    /// tracks touch drag.
+    /// </summary>
+    /// <param name="difference"></param>
     private void HandleMouseMovement(float difference)
     {
         Master.Notify(InputNotification._MouseMove, new InputModel(difference * sensivity));

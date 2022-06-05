@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class InputModel : Object
 {
-    public float movement;
+    public readonly float Movement;
     
     public InputModel(float movement)
     {
-        this.movement = movement;
+        Movement = movement;
     }
     
 }

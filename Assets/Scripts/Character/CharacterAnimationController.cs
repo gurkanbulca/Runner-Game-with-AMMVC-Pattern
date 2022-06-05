@@ -70,7 +70,7 @@ public class CharacterAnimationController : ElementOf<Application>
     private void HandleCharacterNotification(string notificationString, Object[] payload)
     {
         if (notificationString != CharacterNotification._VerticalMovement) return;
-        var acceleration = ((CharacterMovementModel) payload[0]).acceleration;
+        var acceleration = ((CharacterMovementModel) payload[0]).Acceleration;
         _animator.SetFloat(Speed, acceleration);
     }
 }

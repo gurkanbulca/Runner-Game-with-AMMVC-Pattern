@@ -1,7 +1,9 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
 
+/// <summary>
+/// Base class for collectables (stackable, currency, obstacle).
+/// </summary>
 [RequireComponent(typeof(Collider))]
 public abstract class Collectable : MonoBehaviour
 {

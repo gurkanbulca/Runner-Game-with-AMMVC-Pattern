@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterCollector : ElementOf<Application>
@@ -14,6 +11,10 @@ public class CharacterCollector : ElementOf<Application>
         }
     }
 
+    /// <summary>
+    /// Sends notification by collectable type.
+    /// </summary>
+    /// <param name="collectable"></param>
     private void CollectCollectable(Collectable collectable)
     {
         collectable.OnCollect();

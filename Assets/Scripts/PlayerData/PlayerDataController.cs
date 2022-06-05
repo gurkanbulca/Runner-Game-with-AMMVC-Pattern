@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerDataController : MonoBehaviour
@@ -29,7 +25,10 @@ public class PlayerDataController : MonoBehaviour
         }
 #endif
 
-
+    /// <summary>
+    /// saves player data to json.
+    /// </summary>
+    /// <param name="playerData"></param>
     public static void SaveDataToResource(PlayerData playerData)
     {
         var json = JsonUtility.ToJson(playerData);
@@ -38,6 +37,9 @@ public class PlayerDataController : MonoBehaviour
         File.WriteAllText(dataPath + FileName, json);
     }
 
+    /// <summary>
+    /// load from json and apply to player data scriptable object.
+    /// </summary>
     private void LoadDataFromResource()
     {
         var dataPath = UnityEngine.Application.persistentDataPath;
@@ -54,6 +56,9 @@ public class PlayerDataController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// reset player data to default values
+    /// </summary>
     private void LoadDefaultData()
     {
        playerData.ResetData();

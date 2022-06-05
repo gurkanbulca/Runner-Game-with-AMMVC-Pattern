@@ -1,5 +1,8 @@
 using System;
 
+/// <summary>
+/// State machine for game states.
+/// </summary>
 public class GameStateContext
 {
     public IGameState CurrentState { get; set; }

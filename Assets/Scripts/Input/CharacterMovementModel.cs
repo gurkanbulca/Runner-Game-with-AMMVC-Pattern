@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class CharacterMovementModel : Object
 {
-    public float acceleration;
+    public readonly float Acceleration;
     
     public CharacterMovementModel(float acceleration)
     {
-        this.acceleration = acceleration;
+        Acceleration = acceleration;
     }
     
 }
